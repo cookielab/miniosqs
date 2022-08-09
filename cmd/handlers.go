@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"net/url"
 	"strings"
 
 	"github.com/aws/aws-sdk-go/aws"
@@ -83,6 +84,7 @@ func (app *application) notifySqs(w http.ResponseWriter, r *http.Request) {
 
 	for idx := range e.Records {
 		e.Records[idx].EventName = strings.TrimPrefix(e.Records[idx].EventName, "s3:")
+		e.Records[idx].S3.Object.Key, _ = url.QueryUnescape(e.Records[idx].S3.Object.Key)
 	}
 
 	j, err := json.Marshal(e)
