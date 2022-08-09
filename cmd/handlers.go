@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strings"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/sqs"
@@ -79,6 +80,10 @@ func (app *application) notifySqs(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	app.infoLog.Printf("Event: %+v", e)
+
+	for idx := range e.Records {
+		e.Records[idx].EventName = strings.TrimPrefix(e.Records[idx].EventName, "s3:")
+	}
 
 	j, err := json.Marshal(e)
 	if err != nil {
