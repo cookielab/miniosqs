@@ -15,17 +15,17 @@ type Event struct {
 	EventSource  string `json:"eventSource"`
 	AwsRegion    string `json:"awsRegion"`
 	EventTime    string `json:"eventTime"`
-	EventName    string `json: "eventName"`
+	EventName    string `json:"eventName"`
 	UserIdentity struct {
 		PrincipalId string `json:"principalId"`
-	}
+	} `json:"userIdentity"`
 	RequestParameters struct {
 		SourceIPAddress string `json:"sourceIPAddress"`
-	}
+	} `json:"requestParameters"`
 	ResponseElements struct {
 		XAmzRequestId string `json:"x-amz-request-id"`
 		XAmzId2       string `json:"x-amz-id-2"`
-	}
+	} `json:"responseElements"`
 	S3 struct {
 		S3SchemaVersion string `json:"s3SchemaVersion"`
 		ConfigurationId string `json:"configurationId"`
@@ -33,17 +33,17 @@ type Event struct {
 			Name          string `json:"name"`
 			OwnerIdentity struct {
 				PrincipalId string `json:"principalId"`
-			}
+			} `json:"ownerIdentity"`
 			Arn string `json:"arn"`
-		}
+		} `json:"bucket"`
 		Object struct {
 			Key       string `json:"key"`
 			Size      int    `json:"size"`
 			ETag      string `json:"eTag"`
 			VersionId string `json:"versionId"`
 			Sequencer string `json:"sequencer"`
-		}
-	}
+		} `json:"object"`
+	} `json:"s3"`
 }
 
 type Records struct {
